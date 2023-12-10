@@ -3,11 +3,11 @@
 
 ## Admin Panel Features
 
-- crud categories
-- crud posts
-- crud banners
-- crud comments
-- manage website settings
+- Crud categories
+- Crud posts
+- Crud banners
+- Crud comments
+- Manage website settings
 
 ## Other Features
 
