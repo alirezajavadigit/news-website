@@ -6,69 +6,93 @@ use PDO;
 use PDOException;
 
 class DataBase{
-    private $connection;
-    private $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8");
 
+    private $connection;
+    private $options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8');
     private $dbHost = DB_HOST;
     private $dbUserName = DB_USERNAME;
     private $dbName = DB_NAME;
     private $dbPassword = DB_PASSWORD;
 
-    function __construct(){
-        try {
-            $this->connection = new PDO("mysql:host=" . $this->dbHost . ";dbname=" . $this->dbName, $this->dbUserName, $this->dbPassword, $this->options);
-        } catch (PDOException $e) {
+    function __construct()
+    {
+        try
+        {
+            $this->connection = new PDO("mysql:host=" . $this->dbHost. ";dbname=" . $this->dbName, $this->dbUserName, $this->dbPassword, $this->options);
+        }
+        catch(PDOException $e){
             echo $e->getMessage();
             exit;
         }
     }
 
-    public function select($sql, $values = null){
+
+    // select('select * from users');
+    // select('select * from users where id = ?', [2]);
+    public function select($sql, $values = null)
+    {
         try{
             $stmt = $this->connection->prepare($sql);
-            if($values === null){
+            if($values == null)
+            {
                 $stmt->execute();
-                $result = $stmt;
-                return  $result;
-            }else{
-                $stmt->execute($values);
-                $result = $stmt->fetchAll();
-                return sizeof($result) === 1 ? $result[0] : $result;
             }
-        }catch (PDOException $e) {
+            else
+            {
+                $stmt->execute($values);
+            }
+            $result = $stmt;
+            return $result;
+        }
+        catch(PDOException $e){
             echo $e->getMessage();
             return false;
         }
+
     }
 
-    public function insert($tableName, $fields, $values){
+
+    // insert('users', ['username', 'password', 'age'], ['hassank2', '1234', 30]);
+    public function insert($tableName, $fields, $values)
+    {
         try{
-            $stmt = $this->connection->prepare("INSERT INTO " . $tableName . "(" . implode(", ", $fields) . " , created_at) VALUES (:" . implode(", :", $fields) . ", NOW() );");
+            // 'username' => 'hassank2', 'password' => '1234', 'age' => 30
+            $stmt = $this->connection->prepare("INSERT INTO ".$tableName."(".implode(', ', $fields)." , created_at) VALUES ( :" . implode(', :', $fields) . " , now() );");
             $stmt->execute(array_combine($fields, $values));
             return true;
-        }catch (PDOException $e) {
+        }
+        catch(PDOException $e){
             echo $e->getMessage();
             return false;
         }
     }
-        // "UPDATE USERS SET name = ?, "
-    public function update($tableName, $id, $fields, $values){
-        try{
-            $sql = "UPDATE " . $tableName . " SET ";
-            foreach(array_combine($fields, $values) as $field => $value){
-                if($value){
-                    $sql .= " `" . $field . "` = ? ,";
-                }else{
-                    $sql .= " `" . $field . "` = NULL ,";
-                }
-            }
 
-            $sql .= " updated_at = NOW()";
-            $sql .= " WHERE id = ?";
+    // update('users', 2, ['username', 'password'], ['alik2', 12345]);
+    public function update($tableName, $id, $fields, $values)
+    {
+
+        $sql = "UPDATE " . $tableName . " SET";
+        foreach(array_combine($fields, $values) as $field => $value)
+        {
+            if($value)
+            {
+                $sql .= " `" . $field . "` = ? ,";
+            }
+            else{
+                $sql .= " `" . $field . "` = NULL ,";
+
+            }
+        }
+
+        $sql .= " updated_at = now()";
+        $sql .= " WHERE id = ?";
+        try{
             $stmt = $this->connection->prepare($sql);
             $stmt->execute(array_merge(array_filter(array_values($values)), [$id]));
             return true;
-        }catch (PDOException $e) {
+        }
+
+        catch(PDOException $e){
             echo $e->getMessage();
             return false;
         }
@@ -76,22 +100,36 @@ class DataBase{
 
     }
 
-    public function delete($tableName, $id){
-        $sql = "DELETE FROM " . $tableName . " WHERE id = ?;";
+    // delete('users', 2);
+    public function delete($tableName, $id)
+    {
+        $sql = "DELETE FROM " . $tableName . " WHERE id = ? ;";
         try{
             $stmt = $this->connection->prepare($sql);
             $stmt->execute([$id]);
             return true;
-        }catch (PDOException $e) {
+        }
+
+        catch(PDOException $e){
             echo $e->getMessage();
             return false;
         }
     }
 
-    function __destruct(){
-        $this->connection = null;
-        exit;
+
+
+    public function createTable($sql)
+    {
+        try{
+            $this->connection->exec($sql);
+            return true;
+        }
+        catch(PDOException $e){
+            echo $e->getMessage();
+            return false;
+        }
+        
     }
 
-}
 
+}
