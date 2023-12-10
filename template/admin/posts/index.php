@@ -28,7 +28,7 @@ require_once(BASE_PATH . '/template/admin/layouts/header.php');
             </tr>
         </thead>
         <tbody>
-            <?php $number = 0;
+            <?php $number = 1;
             foreach ($posts as $post) { ?>
                 <tr>
                     <td>
@@ -47,8 +47,7 @@ require_once(BASE_PATH . '/template/admin/layouts/header.php');
                     <td>
                         <?= $post['breaking_news'] == 1 ? ' <span class="badge badge-success">#breaking_news</span>' : '' ?>
                         <?= $post['selected'] == 1 ? ' <span class="badge badge-dark">#editor_selected</span>' : '' ?>
-
-
+                        <?= $post['selected'] == 0 && $post['breaking_news'] == 0 ? '<span class="badge badge-primary">#</span>' : '' ?>
                     </td>
                     <td>
                         <?= $post['user_id'] ?>
@@ -58,11 +57,11 @@ require_once(BASE_PATH . '/template/admin/layouts/header.php');
                     </td>
                     <td><img style="width: 80px;" src="<?= asset($post['image']); ?>" alt=""></td>
                     <td style="width: 25rem;">
-                        <a role="button" class="btn btn-sm btn-warning btn-dark text-white" href="">
+                        <a role="button" class="btn btn-sm btn-warning btn-dark text-white" href="<?= url("admin/post/breakingNews/") ."/". $post['id'] ?>">
                             <?= $post['breaking_news'] == 1 ? 'remove breaking news' : 'add breaking news'?>
                             
                         </a>
-                        <a role="button" class="btn btn-sm btn-warning btn-dark text-white" href="">
+                        <a role="button" class="btn btn-sm btn-warning btn-dark text-white" href="<?= url("admin/post/selected/") ."/". $post['id'] ?>">
                             <?= $post['selected'] == 1 ? 'remove selcted ' : 'add selected'?>
                             
                         </a>
