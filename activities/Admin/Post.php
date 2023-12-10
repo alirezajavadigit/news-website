@@ -20,12 +20,17 @@ class Post extends Admin{
 
     public function store($request) {
         $db = new DataBase();
-        // dd($request['image']);
-        $request['user_id'] = 1;
-        $imageUploadResult = $this->saveImage($request['image'], 'posts');
-        // dd($imageUploadResult);
-        $request['image'] = $imageUploadResult;
-        $result = $db->insert("posts", array_keys($request), $request);
+        $realTimeStamp = substr($request['published_at'], 0, 10);
+        $published_at = date("Y-m-d H:i:s", (int)$realTimeStamp);
+        $request['published_at'] = $published_at;
+        if($request['cat_id'] != null){
+
+            $request['user_id'] = 1;
+            $imageUploadResult = $this->saveImage($request['image'], 'posts');
+            // dd($imageUploadResult);
+            $request['image'] = $imageUploadResult;
+            $result = $db->insert("posts", array_keys($request), $request);
+        }
         return $this->redirect("admin/post");
     }
 
