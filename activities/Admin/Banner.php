@@ -27,13 +27,15 @@ class Banner extends Admin{
     public function edit($id){
         
         $db = new DataBase();
-        $banner = $db->select("SELECT * FROM banners WHERE id = ?", [$id]);
+        $banner = $db->select("SELECT * FROM banners WHERE id = ?", [$id])->fetch();
         view("template.admin.banners.edit.php", compact('banner'));
     }
     
     public function update($request, $id){
         $db = new DataBase();
         if(!empty($request['image']['tmp_name'])){
+            $banner = $db->select("SELECT * FROM banners WHERE id = ?", [$id])->fetch();
+            $this->removeImage($banner['image']);
             $imageUploadResult = $this->saveImage($request['image'], 'banners');
             $request['image'] = $imageUploadResult;
         }else{
