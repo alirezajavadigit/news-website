@@ -7,7 +7,7 @@ use database\DataBase;
 class Comment extends Admin{
     public function index(){
         $db = new DataBase();
-        $comments = $db->select("SELECT * FROM comments ORDER BY `id` DESC")->fetchAll();
+        $comments = $db->select("SELECT comments.*, users.username as username, posts.title as title FROM comments LEFT JOIN users ON comments.user_id = users.id LEFT JOIN posts ON comments.post_id = posts.id ORDER BY `id` DESC")->fetchAll();
         view("template.admin.comments.index.php", compact('comments'));
     }
 
