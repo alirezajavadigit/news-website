@@ -13,6 +13,12 @@ class User extends Admin
         view("template.admin.users.index.php", compact('users'));
     }
 
+    /*
+    /   (:
+    /   changePermission method is changing users Permission automatically
+    /   :)
+    */
+
     public function changePermission($id)
     {
         $db = new DataBase;
