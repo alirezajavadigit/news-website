@@ -78,7 +78,7 @@ class Post extends Admin
     public function edit($id)
     {
         $db = new DataBase();
-        $post = $db->select("SELECT * FROM posts WHERE id = ?", [$id]);
+        $post = $db->select("SELECT * FROM posts WHERE id = ?", [$id])->fetch();
         // dd($category);
         view("template.admin.posts.edit.php", compact('post'));
     }
@@ -93,6 +93,8 @@ class Post extends Admin
     public function delete($id)
     {
         $db = new DataBase();
+        $post = $db->select("SELECT * FROM posts WHERE id = ?", [$id])->fetch();
+        $this->removeImage($post['image']);
         $result = $db->delete("posts", $id);
         return $this->redirectBack();
     }
