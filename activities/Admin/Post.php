@@ -89,6 +89,8 @@ class Post extends Admin
     {
         $db = new DataBase();
         if(!empty($request['image']['tmp_name'])){
+            $posts = $db->select("SELECT * FROM posts WHERE id = ?", [$id])->fetch();
+            $this->removeImage($posts['image']);
             $imageUploadResult = $this->saveImage($request['image'], 'posts');
             $request['image'] = $imageUploadResult;
         }else{
