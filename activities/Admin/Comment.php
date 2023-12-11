@@ -13,10 +13,13 @@ class Comment extends Admin{
 
     public function show($id){
         $db = new DataBase();
-        $values = array();
-        $values['status'] = "seen";
-        $db->update("comments", $id, array_keys($values), $values);
-        view("template.admin.comments.show.php");
+        $comment = $db->select("SELECT comments.*, users.username as username, posts.title as title FROM comments LEFT JOIN users ON comments.user_id = users.id LEFT JOIN posts ON comments.post_id = posts.id WHERE comments.id = ?", [$id])->fetch();
+        if($comment['updated_at'] == null){
+            $values = array();
+            $values['status'] = "seen";
+            $db->update("comments", $id, array_keys($values), $values);
+        }
+        view("template.admin.comments.show.php", compact('comment'));
     }
 
     public function approveToggle($id){
