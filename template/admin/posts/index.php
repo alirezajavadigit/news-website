@@ -50,10 +50,10 @@ require_once(BASE_PATH . '/template/admin/layouts/header.php');
                         <?= $post['selected'] == 0 && $post['breaking_news'] == 0 ? '<span class="badge badge-primary">#</span>' : '' ?>
                     </td>
                     <td>
-                        <?= $post['user_id'] ?>
+                        <?= $post['username'] ?>
                     </td>
                     <td>
-                    <?= $post['cat_id'] ?>
+                    <?= $post['name'] ?>
                     </td>
                     <td><img style="width: 80px;" src="<?= asset($post['image']); ?>" alt=""></td>
                     <td style="width: 25rem;">
