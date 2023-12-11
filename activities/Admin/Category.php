@@ -7,7 +7,7 @@ use database\DataBase;
 class Category extends Admin{
     public function index(){
         $db = new DataBase();
-        $categories = $db->select("SELECT * FROM categories ORDER BY `id` DESC");
+        $categories = $db->select("SELECT * FROM categories ORDER BY `id` DESC")->fetchAll();
         // require_once(trim($this->basePath, "/ ") . "/template/admin/categories/index.php");
         view("template.admin.categories.index.php", compact('categories'));
     }
@@ -25,7 +25,7 @@ class Category extends Admin{
 
     public function edit($id){
         $db = new DataBase();
-        $category = $db->select("SELECT * FROM categories WHERE id = ?", [$id]);
+        $category = $db->select("SELECT * FROM categories WHERE id = ?", [$id])->fetch();
         // dd($category);
         view("template.admin.categories.edit.php", compact('category'));
     }
