@@ -36,6 +36,7 @@ require_once "database/DataBase.php";
 require_once "activities/Admin/Admin.php";
 require_once "activities/Admin/Category.php";
 require_once "activities/Admin/Post.php";
+require_once "activities/Admin/Banner.php";
 /*
 /   :)
 /   project helpers started
@@ -188,14 +189,25 @@ uri("admin/post/delete/{id}", 'Admin\Post', "delete");
 */
 uri("admin/post/breakingNews/{id}", 'Admin\Post', "breakingNewsChangeStatus");
 uri("admin/post/selected/{id}", 'Admin\Post', "selectedChangeStatus");
-
-
-
-echo "404 - not found";
+/*
+/   (:
+/   banners
+/   :)
+*/
+uri("admin/banner", 'Admin\Banner', "index");
+uri("admin/banner/create", 'Admin\Banner', "create");
+uri("admin/banner/store", 'Admin\Banner', "store", "POST");
+uri("admin/banner/edit/{id}", 'Admin\Banner', "edit");
+uri("admin/banner/update/{id}", 'Admin\Banner', "update", "POST");
+uri("admin/banner/delete/{id}", 'Admin\Banner', "delete");
 
 
 /*
 /   (:
-/   
+/   404 not found page
 /   :)
 */
+
+require_once(BASE_PATH . "/template/error/404.html");
+
+
