@@ -24,9 +24,11 @@ class Post extends Admin
 
     public function store($request)
     {
+        date_default_timezone_set('Iran');
+
         $db = new DataBase();
         $realTimeStamp = substr($request['published_at'], 0, 10);
-        $published_at = date("Y-m-d H:i:s", (int) $realTimeStamp);
+        $published_at = date("Y-m-d H:i:s", (int)$realTimeStamp);
         $request['published_at'] = $published_at;
         if ($request['cat_id'] != null) {
 
@@ -87,6 +89,8 @@ class Post extends Admin
 
     public function update($request, $id)
     {
+        date_default_timezone_set('Iran');
+
         $db = new DataBase();
         if(!empty($request['image']['tmp_name'])){
             $posts = $db->select("SELECT * FROM posts WHERE id = ?", [$id])->fetch();
