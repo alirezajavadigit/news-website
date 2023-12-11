@@ -9,7 +9,8 @@ class Post extends Admin
     public function index()
     {
         $db = new DataBase();
-        $posts = $db->select("SELECT * FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN categories ON posts.cat_id = categories.id")->fetchAll();
+        // $posts = $db->select("SELECT * FROM posts LEFT JOIN users ON posts.user_id = users.id LEFT JOIN categories ON posts.cat_id = categories.id")->fetchAll();
+        $posts = $db->select("SELECT p.*, u.username AS users, c.name AS name FROM posts p LEFT JOIN users u ON p.user_id = u.id LEFT JOIN categories c ON p.cat_id = c.id")->fetchAll();
         // require_once(trim($this->basePath, "/ ") . "/template/admin/categories/index.php");
         view("template.admin.posts.index.php", compact('posts'));
     }
