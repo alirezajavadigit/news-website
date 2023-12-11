@@ -38,6 +38,7 @@ require_once "activities/Admin/Category.php";
 require_once "activities/Admin/Post.php";
 require_once "activities/Admin/Banner.php";
 require_once "activities/Admin/User.php";
+require_once "activities/Admin/Comment.php";
 /*
 /   :)
 /   project helpers started
@@ -211,6 +212,14 @@ uri("admin/user/edit/{id}", 'Admin\User', "edit");
 uri("admin/user/update/{id}", 'Admin\User', "update", "POST");
 uri("admin/user/delete/{id}", 'Admin\User', "delete");
 uri("admin/user/permission-change/{id}", 'Admin\User', "changePermission");
+/*
+/   (:
+/   comments
+/   :)
+*/
+uri("admin/comment", 'Admin\Comment', "index");
+uri("admin/comment/show/{id}", 'Admin\Comment', "show");
+uri("admin/comment/approve-toggle/{id}", 'Admin\Comment', "approveToggle");
 
 
 /*
