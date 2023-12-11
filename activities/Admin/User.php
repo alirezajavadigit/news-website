@@ -17,8 +17,7 @@ class User extends Admin
     {
         $db = new DataBase;
         $users = $db->select("SELECT * FROM users WHERE id = ?", [$id])->fetch();
-        $status = null;
-        if ((int) $users['permission'] == "admin") {
+        if ($users['permission'] == "admin") {
             $values = array();
             $values['permission'] = "user";
             $db->update("users", $id, array_keys($values), $values);
