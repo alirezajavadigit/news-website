@@ -79,13 +79,21 @@ class Post extends Admin
     {
         $db = new DataBase();
         $post = $db->select("SELECT * FROM posts WHERE id = ?", [$id])->fetch();
+        $categories = $db->select("SELECT * FROM categories")->fetchAll();
         // dd($category);
-        view("template.admin.posts.edit.php", compact('post'));
+        view("template.admin.posts.edit.php", compact('post', 'categories'));
     }
 
     public function update($request, $id)
     {
         $db = new DataBase();
+        if(!empty($request['image']['tmp_name'])){
+            $imageUploadResult = $this->saveImage($request['image'], 'posts');
+            $request['image'] = $imageUploadResult;
+        }else{
+            unset($request['image']);
+        }
+       
         $result = $db->update("posts", $id, array_keys($request), $request);
         return $this->redirect("admin/post");
     }
