@@ -34,7 +34,7 @@ require_once(BASE_PATH . '/template/admin/layouts/header.php');
                         <?= $user['username'] ?>
                     </td>
                     <td>
-                        <?= $user['admin'] ?>
+                        <?= $user['email'] ?>
                     </td>
                     <td>
                         <?= $user['permission'] ?>
