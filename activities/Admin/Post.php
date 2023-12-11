@@ -92,6 +92,8 @@ class Post extends Admin
         date_default_timezone_set('Iran');
 
         $db = new DataBase();
+        $realTimestampt = substr($request['published_at'], 0, 10);
+        $request['published_at'] = date("Y-m-d H:i:s", (int)$realTimestampt);
         if(!empty($request['image']['tmp_name'])){
             $posts = $db->select("SELECT * FROM posts WHERE id = ?", [$id])->fetch();
             $this->removeImage($posts['image']);
