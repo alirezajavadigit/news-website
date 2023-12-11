@@ -7,7 +7,7 @@ use database\DataBase;
 class Banner extends Admin{
     public function index(){
         $db = new DataBase();
-        $banners = $db->select("SELECT * FROM banners ORDER BY `id` DESC");
+        $banners = $db->select("SELECT * FROM banners ORDER BY `id` DESC")->fetchAll();
         // require_once(trim($this->basePath, "/ ") . "/template/admin/banners/index.php");
         view("template.admin.banners.index.php", compact('banners'));
     }
