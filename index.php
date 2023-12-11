@@ -210,6 +210,7 @@ uri("admin/user", 'Admin\User', "index");
 uri("admin/user/edit/{id}", 'Admin\User', "edit");
 uri("admin/user/update/{id}", 'Admin\User', "update", "POST");
 uri("admin/user/delete/{id}", 'Admin\User', "delete");
+uri("admin/user/permission-change/{id}", 'Admin\User', "changePermission");
 
 
 /*
