@@ -40,10 +40,10 @@ require_once(BASE_PATH . '/template/admin/layouts/header.php');
 
             <div class="form-group">
                 <label for="published_at">published at</label>
-                <input type="text" class="form-control" id="published_at" name="published_at"
-                    value="<?= $post['published_at'] ?>" required autofocus>
+                <input type="text" class="form-control d-none" id="published_at" name="published_at" required autofocus>
+            <input type="text" class="form-control" id="published_at_view" value="<?= $post['published_at'] ?>"required autofocus>
             </div>
-
+                  
             <div class="form-group">
                 <label for="summary">summary</label>
                 <textarea class="form-control" id="summary" name="summary" placeholder="summary ..."
