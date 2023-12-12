@@ -164,7 +164,19 @@ function dd($var){
     var_dump($var);
     exit;
 }
-
+/*
+/   :)
+/   project setting information helper
+/   :)
+*/
+function setting(){
+    $db = new DataBase;
+    return $db->select("SELECT * FROM setting")->fetch();
+}
+spl_autoload_register(function($className){
+    $path = BASE_PATH . DIRECTORY_SEPARATOR . "lib" . DIRECTORY_SEPARATOR;
+    include $path . $className . ".php";
+});
 
 /*
 /   (:
