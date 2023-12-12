@@ -241,7 +241,14 @@ uri("admin/menu/store", 'Admin\Menu', "store", "POST");
 uri("admin/menu/edit/{id}", 'Admin\Menu', "edit");
 uri("admin/menu/update/{id}", 'Admin\Menu', "update", "POST");
 uri("admin/menu/delete/{id}", 'Admin\Menu', "delete");
-
+/*
+/   (:
+/   setting
+/   :)
+*/
+uri("admin/setting", 'Admin\Setting', "index");
+uri("admin/setting/show/{id}", 'Admin\Setting', "show");
+uri("admin/setting/update/{id}", 'Admin\Setting', "update", "POST");
 /*
 /   (:
 /   404 not found page
