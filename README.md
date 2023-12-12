@@ -1,5 +1,5 @@
 # News Website
- a simple website with pure php and mysql
+ a simple news website with pure PHP and MySQL
 
 ## Admin Panel Features
 
