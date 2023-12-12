@@ -39,6 +39,7 @@ require_once "activities/Admin/Post.php";
 require_once "activities/Admin/Banner.php";
 require_once "activities/Admin/User.php";
 require_once "activities/Admin/Comment.php";
+require_once "activities/Admin/Menu.php";
 
 spl_autoload_register(function($className){
     $path = BASE_PATH . DIRECTORY_SEPARATOR . "lib" . DIRECTORY_SEPARATOR;
@@ -229,7 +230,17 @@ uri("admin/user/permission-change/{id}", 'Admin\User', "changePermission");
 uri("admin/comment", 'Admin\Comment', "index");
 uri("admin/comment/show/{id}", 'Admin\Comment', "show");
 uri("admin/comment/approve-toggle/{id}", 'Admin\Comment', "approveToggle");
-
+/*
+/   (:
+/   menus
+/   :)
+*/
+uri("admin/menu", 'Admin\Menu', "index");
+uri("admin/menu/create", 'Admin\Menu', "create");
+uri("admin/menu/store", 'Admin\Menu', "store", "POST");
+uri("admin/menu/edit/{id}", 'Admin\Menu', "edit");
+uri("admin/menu/update/{id}", 'Admin\Menu', "update", "POST");
+uri("admin/menu/delete/{id}", 'Admin\Menu', "delete");
 
 /*
 /   (:
