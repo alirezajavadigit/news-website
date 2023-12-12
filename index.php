@@ -40,6 +40,7 @@ require_once "activities/Admin/Banner.php";
 require_once "activities/Admin/User.php";
 require_once "activities/Admin/Comment.php";
 require_once "activities/Admin/Menu.php";
+require_once "activities/Admin/Setting.php";
 
 spl_autoload_register(function($className){
     $path = BASE_PATH . DIRECTORY_SEPARATOR . "lib" . DIRECTORY_SEPARATOR;
