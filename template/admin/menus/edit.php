@@ -31,7 +31,7 @@ require_once(BASE_PATH . '/template/admin/layouts/header.php');
                     <option value="">root</option>
 
                     <?php foreach ($menus as $menuP) { ?>
-                        <option value="<?= $menuP['id'] ?>" <?= $menuP['id'] == $menu['id'] ? "selected" : "" ?>>
+                        <option value="<?= $menuP['id'] ?>" <?= $menuP['id'] == $menu['parent_id'] ? "selected" : "" ?>>
                             <?= $menuP['name'] ?>
                         </option>
                     <?php } ?>
