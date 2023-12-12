@@ -40,7 +40,7 @@ require_once(BASE_PATH . '/template/admin/layouts/header.php');
                         <?= $user['permission'] ?>
                     </td>
                     <td>
-                        <?= $user['created_at'] ?>
+                        <?= jalaliDate($user['created_at']) ?>
                     </td>
                     <td>
 
