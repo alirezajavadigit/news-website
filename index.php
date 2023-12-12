@@ -260,8 +260,8 @@ uri("admin/menu/delete/{id}", 'Admin\Menu', "delete");
 /   :)
 */
 uri("admin/setting", 'Admin\Setting', "index");
-uri("admin/setting/show/{id}", 'Admin\Setting', "show");
-uri("admin/setting/update/{id}", 'Admin\Setting', "update", "POST");
+uri("admin/setting/show", 'Admin\Setting', "show");
+uri("admin/setting/update", 'Admin\Setting', "update", "POST");
 /*
 /   (:
 /   404 not found page
