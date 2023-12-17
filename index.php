@@ -39,11 +39,11 @@ define('DB_PASSWORD', '');
 */
 define('MAIL_HOST', 'smtp.gmail.com');
 define('SMTP_AUTH', true);
-define('MAIL_USERNAME', 'onlinephp.attendance@gmail.com');
-define('MAIL_PASSWORD', '');
+define('MAIL_USERNAME', 'dota2programer@gmail.com');
+define('MAIL_PASSWORD', 'ayqc tjpf miki zdgm');
 define('MAIL_PORT', 587);
-define('SENDER_MAIL', 'onlinephp.attendance@gmail.com');
-define('SENDER_NAME', 'دوره آنلاین php جامع');
+define('SENDER_MAIL', 'dota2programer@gmail.com');
+define('SENDER_NAME', 'News Website');
 
 /*
 /   :)
@@ -288,6 +288,15 @@ uri("admin/menu/delete/{id}", 'Admin\Menu', "delete");
 uri("admin/setting", 'Admin\Setting', "index");
 uri("admin/setting/show", 'Admin\Setting', "show");
 uri("admin/setting/update", 'Admin\Setting', "update", "POST");
+
+
+/*
+/   (:
+/   register routes
+/   :)
+*/
+uri('register', 'Auth\Auth', 'register');
+uri('register/store', 'Auth\Auth', 'registerStore', 'POST');
 /*
 /   (:
 /   404 not found page
