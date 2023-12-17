@@ -134,4 +134,29 @@ class Auth
             return view("template.error.wrong-activate-token.php");
         }
     }
+
+    public function login(){
+        return view("template.auth.login.php");
+    }
+
+    public function checkLogin($request){
+        if(empty($request['email']) || empty($request['password'])){
+            flash("login_error", "پر کردن تمامی فیلد ها الزامی میباشد");
+            return $this->redirectBack();
+        }
+        $db = new DataBase();
+        $user = $db->select("SELECT * FROM users WHERE email = ? AND is_active = 1;",[$request['email']])->fetch();
+        if($user == null){
+            flash("login_error", "کاربر وجود ندارد ثبت نام کنید یا اگر ثبت نام کردید ایمیل خود را تایید کنید");
+            return $this->redirectBack();
+        }
+
+        if(password_verify($request['password'], $user['password'])){
+            $_SESSION['user'] = $user['id'];
+            return $this->redirect("admin");
+        }else{
+            flash("login_error", "رمز عبور یا ایمیل شما اشتباه است");
+            return $this->redirectBack();
+        }
+    }
 }
