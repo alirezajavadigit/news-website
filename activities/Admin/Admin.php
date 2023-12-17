@@ -2,6 +2,7 @@
 
 namespace Admin;
 
+use Auth\Auth;
 use database\DataBase;
 
 class Admin
@@ -13,8 +14,9 @@ class Admin
     {
         $this->currentDomain = CURRENT_DOMAIN;
         $this->basePath = BASE_PATH;
+        $auth = new Auth;
         $db = new DataBase();
-        if (isset($_SESSION['user'])) {
+        if ($auth->isLogin()) {
 
             $user = $db->select("SELECT * FROM users WHERE id = ?", [$_SESSION['user']])->fetch();
             if ($user != null) {
@@ -74,5 +76,9 @@ class Admin
         } else {
             return false;
         }
+    }
+
+    public function index(){
+        return view("template.admin.index.php");
     }
 }
