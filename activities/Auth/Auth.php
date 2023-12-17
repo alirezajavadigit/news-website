@@ -41,7 +41,7 @@ class Auth
     protected function activationMessage($username, $verifyToken){
         $message = '<h1>فعال سازی حساب کاربری</h1>
                     <p> '.$username.' عزیز برای فعال سازی حساب کاربری خود لطفا روی لینک زیر کلیک نمایید </p>
-                    <div><a href="">لینک فعال سازی</a></div>
+                    <div><a href="'.url("register/activating/" . $verifyToken).'">لینک فعال سازی</a></div>
         ';
 
         return $message;
@@ -119,6 +119,19 @@ class Auth
                     $this->redirectBack();
                 }
             }
+        }
+    }
+
+    public function activeUser($token){
+        $db = new DataBase();
+        $user = $db->select("SELECT * FROM users WHERE verify_token = ?", [$token])->fetch();
+        if($user != null){
+            $values = array();
+            $values['is_active'] = 1;
+            $db->update("users", $user['id'], array_keys($values), $values);
+            return view("template.auth.activation.php");
+        }else{
+            return view("template.error.wrong-activate-token.php");
         }
     }
 }
