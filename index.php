@@ -297,6 +297,8 @@ uri("admin/setting/update", 'Admin\Setting', "update", "POST");
 */
 uri('register', 'Auth\Auth', 'register');
 uri('register/store', 'Auth\Auth', 'registerStore', 'POST');
+uri('register/activating/{token}', 'Auth\Auth', 'activeUser');
+
 /*
 /   (:
 /   404 not found page
