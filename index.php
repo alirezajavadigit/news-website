@@ -209,7 +209,12 @@ spl_autoload_register(function($className){
 /   routes started
 /   :)
 */
-
+/*
+/   (:
+/   admin routes started
+/   :)
+*/
+uri("admin", 'Admin\Admin', "index");
 /*
 /   (:
 /   category
