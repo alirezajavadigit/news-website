@@ -1,7 +1,10 @@
 <?php
 
+namespace Auth;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
+use database\DataBase;
+use Exception;
 
 class Auth
 {
@@ -29,9 +32,20 @@ class Auth
 
     protected function hash($password)
     {
-        $password = password_hash($password, PASSWORD_DEFAULT);
+        return password_hash($password, PASSWORD_DEFAULT);
     }
 
+    private function random(){
+        return bin2hex(openssl_random_pseudo_bytes(32));
+    }
+    protected function activationMessage($username, $verifyToken){
+        $message = '<h1>فعال سازی حساب کاربری</h1>
+                    <p> '.$username.' عزیز برای فعال سازی حساب کاربری خود لطفا روی لینک زیر کلیک نمایید </p>
+                    <div><a href="">لینک فعال سازی</a></div>
+        ';
+
+        return $message;
+    }
     protected function sendMail($emailAddress, $subject, $body)
     {
            //Create an instance; passing `true` enables exceptions
@@ -59,12 +73,52 @@ class Auth
                $mail->Subject = $subject;
                $mail->Body = $body;
    
-               $result = $mail->send();
-               echo 'Message has been sent';
-               return $result;
+               $mail->send();
+               
+               return true;
            } catch (Exception $e) {
                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                return false;
            }
+    }
+
+    public function register() {
+        return view("template.auth.register.php");
+    }
+
+    public function registerStore($request){
+        if(empty($request['email']) || empty($request['username']) || empty($request['password'])){
+
+            flash("register_error", "پر کردن همه فیلد ها اجباری است!");
+            $this->redirectBack();
+            
+        }elseif(strlen($request['password']) < 8){
+            flash("register_error", "کلمه عبور شما کمتر از 8 کاراکتر است");
+            $this->redirectBack();
+        }elseif(!filter_var($request['email'], FILTER_VALIDATE_EMAIL)){
+            flash("register_error", "لطفا ایمیل معتبر وارد کنید");
+            $this->redirectBack();
+        }else{
+            $db = new DataBase();
+            $user = $db->select("SELECT * FROM users WHERE email = ?", [$request['email']])->fetch();
+            if($user != null){
+                $this->redirectBack();
+            }else{
+                $randomToken = $this->random();
+                // $db->insert("users", )
+                $activationMessage = $this->activationMessage($request['username'], $randomToken);
+                $result = $this->sendMail($request['email'], "فعال سازی حساب کاربری", $activationMessage);
+                if($result){
+                    $request['verify_token'] = $randomToken;
+                    $request['password'] = $this->hash($request['password']);
+                    $db->insert("users", array_keys($request), $request);
+                    $this->redirect("login");
+                }else{
+                    flash("register_error", "لطفا");
+
+                    $this->redirectBack();
+                }
+            }
+        }
     }
 }
