@@ -32,6 +32,24 @@ define('DB_NAME', 'php-project');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');
 
+/*
+/   :)
+/   mail config  
+/   :)
+*/
+define('MAIL_HOST', 'smtp.gmail.com');
+define('SMTP_AUTH', true);
+define('MAIL_USERNAME', 'onlinephp.attendance@gmail.com');
+define('MAIL_PASSWORD', '');
+define('MAIL_PORT', 587);
+define('SENDER_MAIL', 'onlinephp.attendance@gmail.com');
+define('SENDER_NAME', 'دوره آنلاین php جامع');
+
+/*
+/   :)
+/   admin controllers required  
+/   :)
+*/
 require_once "database/DataBase.php";
 require_once "activities/Admin/Admin.php";
 require_once "activities/Admin/Category.php";
@@ -41,6 +59,14 @@ require_once "activities/Admin/User.php";
 require_once "activities/Admin/Comment.php";
 require_once "activities/Admin/Menu.php";
 require_once "activities/Admin/Setting.php";
+
+/*
+/   :)
+/   auth controllers required  
+/   :)
+*/
+require_once "activities/Auth/Auth.php";
+
 
 spl_autoload_register(function($className){
     $path = BASE_PATH . DIRECTORY_SEPARATOR . "lib" . DIRECTORY_SEPARATOR;
