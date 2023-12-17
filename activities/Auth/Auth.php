@@ -124,7 +124,7 @@ class Auth
 
     public function activeUser($token){
         $db = new DataBase();
-        $user = $db->select("SELECT * FROM users WHERE verify_token = ?", [$token])->fetch();
+        $user = $db->select("SELECT * FROM users WHERE verify_token = ? AND is_active = 0;", [$token])->fetch();
         if($user != null){
             $values = array();
             $values['is_active'] = 1;
