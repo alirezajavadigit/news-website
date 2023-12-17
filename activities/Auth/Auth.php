@@ -159,4 +159,13 @@ class Auth
             return $this->redirectBack();
         }
     }
+
+    public function logout(){
+        if(isset($_SESSION['user'])){
+            unset($_SESSION['user']);
+            return $this->redirect("home");
+        }else{
+            return $this->redirect("home");
+        }
+    }
 }
