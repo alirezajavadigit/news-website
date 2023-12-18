@@ -79,6 +79,18 @@ class Admin
     }
 
     public function index(){
-        return view("template.admin.index.php");
+        $db = new DataBase();
+        $categoryCount = $db->select("SELECT COUNT(*) FROM categories")->fetch();
+        $userCount = $db->select("SELECT COUNT(*) FROM users")->fetch();
+        $adminCount = $db->select("SELECT COUNT(*) FROM users WHERE permission = 'admin';")->fetch();
+        $postCount = $db->select("SELECT COUNT(*) FROM posts")->fetch();
+        $postsViews = $db->select("SELECT SUM(view) FROM posts")->fetch();
+        $commentCount = $db->select("SELECT COUNT(*) FROM comments")->fetch();
+        $commentUnseenCount = $db->select("SELECT COUNT(*) FROM comments WHERE status = 'unseen'")->fetch();
+        $commentApprovedCount = $db->select("SELECT COUNT(*) FROM comments WHERE status = 'approved'")->fetch();
+        $mostViewedPosts = $db->select("SELECT * FROM posts ORDER BY view DESC LIMIT 6")->fetchAll();
+        $mostCommentedPosts = $db->select("SELECT posts.title, COUNT(comments.post_id) as comment_count  FROM posts LEFT JOIN comments ON posts.id = comments.post_id GROUP BY posts.id  ORDER BY comment_count DESC LIMIT 6")->fetchAll();
+        $comments = $db->select("SELECT comments.id, comments.comment, comments.status, users.username as user_name FROM comments LEFT JOIN users ON comments.user_id = users.id ORDER BY comments.id DESC LIMIT 6")->fetchAll();
+        return view("template.admin.index.php", compact("commentApprovedCount","commentUnseenCount","categoryCount", "userCount", "adminCount", "postCount", "postsViews", "commentCount", "mostViewedPosts", "mostCommentedPosts", "comments"));
     }
 }
