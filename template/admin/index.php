@@ -1,22 +1,185 @@
 <?php
 
-        require_once(BASE_PATH . '/template/admin/layouts/header.php');
+require_once(BASE_PATH . '/template/admin/layouts/header.php');
 
 
 ?>
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h5"><i class="fas fa-newspaper"></i> admin</h1>
+
+<div class="row mt-3">
+
+    <div class="col-sm-6 col-lg-3">
+        <a href="<?= url('admin/category') ?>" class="text-decoration-none">
+            <div class="card text-white bg-gradiant-green-blue mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center"><span><i class="fas fa-clipboard-list"></i> Categories</span> <?= $categoryCount["COUNT(*)"] ?> <span class="badge badge-pill right"></span></div>
+                <div class="card-body">
+                    <section class="font-12 my-0"><i class="fas fa-clipboard-list"></i> GO TO Categories!</section>
+                </div>
+            </div>
+        </a>
     </div>
-    <div class="table-responsive">
-        <table class="table table-striped table-sm">
-            <caption>welcome</caption>
-        </table>
+    <div class="col-sm-6 col-lg-3">
+        <a href="<?= url('admin/user') ?>" class="text-decoration-none">
+            <div class="card text-white bg-juicy-orange mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center"><span><i class="fas fa-users"></i> Users</span> <?= $userCount["COUNT(*)"] ?> <span class="badge badge-pill right"></span></div>
+                <div class="card-body">
+                    <section class="d-flex justify-content-between align-items-center font-12">
+                        <span class=""><i class="fas fa-users-cog"></i> Admins <span class="badge badge-pill mx-1"> <?= $adminCount["COUNT(*)"] ?> </span></span>
+                        <span class=""><i class="fas fa-user"></i> All Users <span class="badge badge-pill mx-1"> <?= $userCount["COUNT(*)"] + $adminCount["COUNT(*)"] ?> </span></span>
+                    </section>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <a href="<?= url('admin/post') ?>" class="text-decoration-none">
+            <div class="card text-white bg-dracula mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center"><span><i class="fas fa-newspaper"></i> Article</span> <?= $postCount["COUNT(*)"] ?> <span class="badge badge-pill right"></span></div>
+                <div class="card-body">
+                    <section class="d-flex justify-content-between align-items-center font-12">
+                        <span class=""><i class="fas fa-bolt"></i> Views <span class="badge badge-pill mx-1"> <?= $postsViews["SUM(view)"] ?> </span></span>
+                    </section>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <a href="<?= url('admin/comment') ?>" class="text-decoration-none">
+            <div class="card text-white bg-neon-life mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center"><span><i class="fas fa-comments"></i> Comment</span> <?= $commentCount["COUNT(*)"] ?> <span class="badge badge-pill right"></span></div>
+                <div class="card-body">
+                    <!--                        <h5 class="card-title">Info card title</h5>-->
+                    <section class="d-flex justify-content-between align-items-center font-12">
+                        <span class=""><i class="far fa-eye-slash"></i> Unseen <span class="badge badge-pill mx-1"> <?= $commentUnseenCount["COUNT(*)"] ?> </span></span>
+                        <span class=""><i class="far fa-check-circle"></i> Approved <span class="badge badge-pill mx-1"> <?= $commentApprovedCount["COUNT(*)"] ?> </span></span>
+                    </section>
+                </div>
+            </div>
+        </a>
     </div>
 
+</div>
 
-    <?php
 
-        require_once(BASE_PATH . '/template/admin/layouts/footer.php');
+<div class="row mt-2">
+    <div class="col-4">
+        <h2 class="h6 pb-0 mb-0">
+            Most viewed posts
+        </h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>title</th>
+                        <th>view</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $numberPlus = 1;
+                    foreach ($mostViewedPosts as $mostViewedPost) { ?>
+                        <tr>
+                            <td>
+                                <a class="text-primary" href="">
+                                    <?= $numberPlus ?>
+                                </a>
+                            </td>
+                            <td>
+                                <?= $mostViewedPost['title'] ?>
+
+                            </td>
+                            <td><span class="badge badge-secondary"> <?= $mostViewedPost['view'] ?></span></td>
+                        </tr>
+                    <?php $numberPlus++;
+                    } ?>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-4">
+        <h2 class="h6 pb-0 mb-0">
+            Most commented posts
+
+        </h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>title</th>
+                        <th>comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $numberPlus = 1;
+                    foreach ($mostCommentedPosts as $mostCommentedPost) { ?>
+                        <tr>
+                            <td>
+                                <a class="text-primary" href="">
+                                    <?= $numberPlus ?>
+                                </a>
+                            </td>
+                            <td>
+                                <?= $mostCommentedPost['title'] ?>
+                            </td>
+                            <td><span class="badge badge-success"><?= $mostCommentedPost['comment_count'] ?></span></td>
+                        </tr>
+
+                    <?php $numberPlus++;
+                    } ?>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-4">
+        <h2 class="h6 pb-0 mb-0">
+            Comments
+        </h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>username</th>
+                        <th>comment</th>
+                        <th>status</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <?php $numberPlus = 1;
+                    foreach ($comments as $comment) { ?>
+                        <tr>
+                            <td>
+                                <a class="text-primary" href="">
+                                    <?= $numberPlus ?>
+                                </a>
+                            </td>
+                            <td>
+                                <?= $comment['user_name'] ?>
+                            </td>
+                            <td>
+                                <?= $comment['comment'] ?>
+                            </td>
+                            <td><span class="badge badge-warning"><?= $comment['status'] ?></span></td>
+                        </tr>
+                    <?php $numberPlus++;
+                    } ?>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<?php
+
+require_once(BASE_PATH . '/template/admin/layouts/footer.php');
 
 
 ?>
