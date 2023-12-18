@@ -305,6 +305,10 @@ uri('register/store', 'Auth\Auth', 'registerStore', 'POST');
 uri('register/activating/{token}', 'Auth\Auth', 'activeUser');
 uri('login', 'Auth\Auth', 'login');
 uri('check-login', 'Auth\Auth', 'checkLogin', 'POST');
+uri('forgot', 'Auth\Auth', 'forgot');
+uri('forgot/send-email', 'Auth\Auth', 'forgotSendEmail', 'POST');
+uri('reset-password/{token}', 'Auth\Auth', 'resetPassword');
+uri('change-password/{token}', 'Auth\Auth', 'changePassword');
 uri('logout', 'Auth\Auth', 'logout');
 
 /*
