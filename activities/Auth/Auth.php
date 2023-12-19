@@ -53,7 +53,7 @@ class Auth
     {
         $message = '<h1>فراموشی کلمه عبور</h1>
                     <p>   عزیز برای بازیابی کلمه عبور رویه لینک زیر کلیک کنید' . $username . '</p>
-                    <div><a href="' . url("change-password/" . $forgotToken) . '">لینک بازیابی</a></div>
+                    <div><a href="' . url("reset-password/" . $forgotToken) . '">لینک بازیابی</a></div>
         ';
 
         return $message;
@@ -206,7 +206,7 @@ class Auth
             return $this->redirectBack();
         } else {
             $db = new DataBase();
-            $user = $db->select("SELECT * FROM users WHERE email = ? AND is_active = 0;", [$request['email']])->fetch();
+            $user = $db->select("SELECT * FROM users WHERE email = ? AND is_active = 1;", [$request['email']])->fetch();
             if($user == null){
                 flash("forgot_email_erros", "ایمیل وارد شده در سیستم موجود نمیباشد");
                 return $this->redirectBack();
@@ -215,6 +215,7 @@ class Auth
             $forgotMessage = $this->forgotMessage($user['username'], $forgotToken);
             $result = $this->sendMail($request['email'], "بازیابی کلمه عبور", $forgotMessage);
             if($result){
+                flash("forgot_email_erros", "ok");
                 $values = array();
                 $values['forgot_token'] = $forgotToken;
                 $values['forgot_token_expire'] = date("Y-m-d H:i:s", strtotime("+15 minutes"));
@@ -227,7 +228,12 @@ class Auth
 
         }
     }
-    public function changePassword($token)
+    public function resetPassword($token)
+    {
+        return view("template.auth.reset-password.php", compact("token"));
+        
+    }
+    public function changePassword($request, $token)
     {
         $db = new DataBase();
         $user = $db->select("SELECT * FROM users WHERE forgot_token = ?", [$token])->fetch();
@@ -235,6 +241,9 @@ class Auth
             flash("forgot_email_erros", "عملیات با خطا مواجه شد");
             return $this->redirectBack();
         }
-        // $user = 
+        $values = array();
+        $values['password'] = $this->hash($request['password']);
+        $db->update("users", $user['id'], array_keys($values), $values);
+        return $this->redirect("login");
     }
 }
