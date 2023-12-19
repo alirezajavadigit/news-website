@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<head>
+    <title>ورود</title>
 <?php require_once(BASE_PATH . '/template/auth/layouts/head-tag.php')?>
+</head>
 
 
 <body>
 
-    <div class="limiter">
+<div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
                 <div class="login100-pic js-tilt" data-tilt>
-                    <img src="<?= asset('public/auth/assets/images/img-01.png') ?>" alt="IMG">
+                <img src="<?= asset('public/auth/assets/images/img-01.png') ?>" alt="IMG">
                 </div>
 
                 <form method="post" action="<?= url('check-login') ?>" class="login100-form validate-form">
                     <span class="login100-form-title">
-                        Register
+                        Member Login
                     </span>
+
                     <?php
-                        $message = flash("login_error");
-                        if(!empty($message)){
-                    ?>
-                    <div class="mb-2 alert alert-danger"> <small class="form-text text-danger"><?= $message ?></small> </div>
-                    <?php } ?>
+                        $message = flash('login_error');
+                        if (!empty($message)) {
+                            ?>
+
+                    <div class="mb-2 alert alert-danger"> <small class="form-text text-danger">
+                        <?= $message ?>
+                    </small> </div>
+
+                    <?php
+                        } ?>
 
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
                         <input class="input100" type="text" name="email" placeholder="Email">
@@ -42,7 +50,7 @@
 
                     <div class="container-login100-form-btn">
                         <button type="submit" class="login100-form-btn">
-                            login
+                            Login
                         </button>
                     </div>
 
@@ -50,14 +58,14 @@
                         <span class="txt1">
                             Forgot
                         </span>
-                        <a class="txt2" href="#">
+                        <a class="txt2" href="<?= url("forgot") ?>">
                             Username / Password?
                         </a>
                     </div>
 
                     <div class="text-center p-t-136">
-                        <a class="txt2" href="<?= url("register") ?>">
-                            Login your Account
+                        <a class="txt2" href="<?= url('register') ?>">
+                            Create your Account
                             <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                         </a>
                     </div>
