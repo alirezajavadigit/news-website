@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<head>
+    <title>ثبت نام</title>
 <?php require_once(BASE_PATH . '/template/auth/layouts/head-tag.php')?>
-
+</head>
 
 <body>
 
@@ -17,12 +18,19 @@
                     <span class="login100-form-title">
                         Register
                     </span>
+
                     <?php
-                        $message = flash("register_error");
-                        if(!empty($message)){
-                    ?>
-                    <div class="mb-2 alert alert-danger"> <small class="form-text text-danger"><?= $message ?></small> </div>
-                    <?php } ?>
+                        $message = flash('register_error');
+                        if (!empty($message)) {
+                            ?>
+
+                    <div class="mb-2 alert alert-danger"> <small class="form-text text-danger">
+                        <?= $message ?>
+                    </small> </div>
+
+                    <?php
+                        } ?>
+
 
 
                     <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
@@ -59,13 +67,13 @@
                         <span class="txt1">
                             Forgot
                         </span>
-                        <a class="txt2" href="#">
+                        <a class="txt2" href="<?= url("forgot") ?>">
                             Username / Password?
                         </a>
                     </div>
 
                     <div class="text-center p-t-136">
-                        <a class="txt2" href="<?= url("login") ?>">
+                        <a class="txt2" href="<?= url('login') ?>">
                             Login your Account
                             <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                         </a>
