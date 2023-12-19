@@ -308,7 +308,7 @@ uri('check-login', 'Auth\Auth', 'checkLogin', 'POST');
 uri('forgot', 'Auth\Auth', 'forgot');
 uri('forgot/send-email', 'Auth\Auth', 'forgotSendEmail', 'POST');
 uri('reset-password/{token}', 'Auth\Auth', 'resetPassword');
-uri('change-password/{token}', 'Auth\Auth', 'changePassword');
+uri('change-password/{token}', 'Auth\Auth', 'changePassword', "POST");
 uri('logout', 'Auth\Auth', 'logout');
 
 /*
