@@ -67,6 +67,13 @@ require_once "activities/Admin/Setting.php";
 */
 require_once "activities/Auth/Auth.php";
 
+/*
+/   :)
+/   app controllers required  
+/   :)
+*/
+require_once "activities/App/Home.php";
+
 
 spl_autoload_register(function($className){
     $path = BASE_PATH . DIRECTORY_SEPARATOR . "lib" . DIRECTORY_SEPARATOR;
@@ -310,6 +317,18 @@ uri('forgot/send-email', 'Auth\Auth', 'forgotSendEmail', 'POST');
 uri('reset-password/{token}', 'Auth\Auth', 'resetPassword');
 uri('change-password/{token}', 'Auth\Auth', 'changePassword', "POST");
 uri('logout', 'Auth\Auth', 'logout');
+
+/*
+/   (:
+/   app routes
+/   :)
+*/
+uri('/', 'App\Home', 'index');
+uri('home', 'App\Home', 'index');
+uri('show/category/{id}', 'App\Home', 'categoryShow');
+uri('show/post/{id}', 'App\Home', 'postShow');
+uri('comment/store', 'App\Home', 'commentStore', "POST");
+
 
 /*
 /   (:
