@@ -124,7 +124,8 @@ $black			: #222;
     font-weight: 300;
 }
 
-*:not(span) {
+*:not(span,
+i) {
     font-family: Vazir!important;
 }
 
