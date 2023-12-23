@@ -32,7 +32,7 @@ class Post extends Admin
         $request['published_at'] = $published_at;
         if ($request['cat_id'] != null) {
 
-            $request['user_id'] = 1;
+            $request['user_id'] = $_SESSION['user'];
             $imageUploadResult = $this->saveImage($request['image'], 'posts');
             // dd($imageUploadResult);
             $request['image'] = $imageUploadResult;
