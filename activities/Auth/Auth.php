@@ -121,13 +121,14 @@ class Auth
                 // $db->insert("users", )
                 $activationMessage = $this->activationMessage($request['username'], $randomToken);
                 $result = $this->sendMail($request['email'], "فعال سازی حساب کاربری", $activationMessage);
+
                 if ($result) {
                     $request['verify_token'] = $randomToken;
                     $request['password'] = $this->hash($request['password']);
                     $db->insert("users", array_keys($request), $request);
                     $this->redirect("login");
                 } else {
-                    flash("register_error", "لطفا");
+                    flash("register_error", "عملیات با خاطا مواجه شد");
 
                     $this->redirectBack();
                 }
@@ -207,37 +208,35 @@ class Auth
         } else {
             $db = new DataBase();
             $user = $db->select("SELECT * FROM users WHERE email = ? AND is_active = 1;", [$request['email']])->fetch();
-            if($user == null){
+            if ($user == null) {
                 flash("forgot_email_erros", "ایمیل وارد شده در سیستم موجود نمیباشد");
                 return $this->redirectBack();
             }
             $forgotToken = $this->random();
             $forgotMessage = $this->forgotMessage($user['username'], $forgotToken);
             $result = $this->sendMail($request['email'], "بازیابی کلمه عبور", $forgotMessage);
-            if($result){
+            if ($result) {
                 flash("forgot_email_erros", "ok");
                 $values = array();
                 $values['forgot_token'] = $forgotToken;
                 $values['forgot_token_expire'] = date("Y-m-d H:i:s", strtotime("+15 minutes"));
                 $db->update("users", $user['id'], array_keys($values), $values);
                 return $this->redirect("login");
-            }else{
+            } else {
                 flash("forgot_email_erros", "عملیات با خطا مواجه شد");
                 return $this->redirectBack();
             }
-
         }
     }
     public function resetPassword($token)
     {
         return view("template.auth.reset-password.php", compact("token"));
-        
     }
     public function changePassword($request, $token)
     {
         $db = new DataBase();
         $user = $db->select("SELECT * FROM users WHERE forgot_token = ?", [$token])->fetch();
-        if($user == null){
+        if ($user == null) {
             flash("forgot_email_erros", "عملیات با خطا مواجه شد");
             return $this->redirectBack();
         }
