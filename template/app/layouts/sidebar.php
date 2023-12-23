@@ -10,11 +10,11 @@
                             <img class="img-fluid" src="<?= asset($selectedPost['image']) ?>" alt="">
                         </div>
                         <ul class="tags">
-                            <li><a href="#"><?= $selectedPost['category_name'] ?> </a></li>
+                            <li><a href="<?= url("show/category/" . $selectedPost['category_id']) ?>"><?= $selectedPost['category_name'] ?> </a></li>
                         </ul>
                     </div>
                     <div class="details">
-                        <a href="image-post.html">
+                        <a href="<?= url("show/post/" . $selectedPost['id']) ?>">
                             <h4 class="mt-20"><?= $selectedPost['title'] ?> </h4>
                         </a>
                         <ul class="meta">
@@ -23,26 +23,24 @@
                             <li><a href="#"><?= $selectedPost['comment_count'] ?> <span class="lnr lnr-bubble"></span></a></li>
                         </ul>
                         <p class="excert">
-                            خلاصه متن خبر
+                            <?= substr($selectedPost['summary'], 0, 87) ?>
                         </p>
                     </div>
                 </div>
             <?php } ?>
-
         </div>
         <div class="single-sidebar-widget ads-widget">
             <img class="img-fluid" src="img/sidebar-ads.jpg" alt="">
         </div>
-
         <div class="single-sidebar-widget most-popular-widget">
             <h6 class="title">پر بحث ترین ها</h6>
             <?php foreach ($mostCommentedPosts as $mostCommentedPost) { ?>
                 <div class="single-list flex-row d-flex">
                     <div class="thumb">
-                        <img src="<?= asset($mostCommentedPost['image']) ?>" alt="" width="100px" height="100px">
+                        <img src="<?= asset($mostCommentedPost['image']) ?>" alt="<?= $mostCommentedPost['title'] ?>" width="100px" height="100px">
                     </div>
                     <div class="details">
-                        <a href="image-post.html">
+                        <a href="<?= url("show/post/" . $mostCommentedPost['id']) ?>">
                             <h6><?= $mostCommentedPost['title'] ?></h6>
                         </a>
                         <ul class="meta">
