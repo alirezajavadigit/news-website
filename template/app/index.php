@@ -12,9 +12,9 @@
                         </div>
                         <div class="top-post-details">
                             <ul class="tags">
-                                <li><a href="#"><?= $selectedPosts[0]['category_name'] ?></a></li>
+                                <li><a href="<?= url("show/category/" . $selectedPost[0]['category_id']) ?>"><?= $selectedPosts[0]['category_name'] ?></a></li>
                             </ul>
-                            <a href="image-post.html">
+                            <a href="<?= url("show/post/" . $selectedPosts[0]['id']) ?>">
                                 <h3><?= $selectedPosts[0]['title'] ?></h3>
                             </a>
                             <ul class="meta">
@@ -36,9 +36,9 @@
                             </div>
                             <div class="top-post-details">
                                 <ul class="tags">
-                                    <li><a href="#"><?= $selectedPosts[1]['category_name'] ?></a></li>
+                                    <li><a href="<?= url("show/category/" . $selectedPost[1]['category_id']) ?>"><?= $selectedPosts[1]['category_name'] ?></a></li>
                                 </ul>
-                                <a href="image-post.html">
+                                <a href="<?= url("show/post/" . $selectedPosts[1]['id']) ?>">
                                     <h3><?= $selectedPosts[1]['title'] ?></h3>
                                 </a>
                                 <ul class="meta">
@@ -59,9 +59,9 @@
                             </div>
                             <div class="top-post-details">
                                 <ul class="tags">
-                                    <li><a href="#"><?= $selectedPosts[2]['category_name'] ?></a></li>
+                                    <li><a href="<?= url("show/category/" . $selectedPosts[2]['category_id']) ?>"><?= $selectedPosts[2]['category_name'] ?></a></li>
                                 </ul>
-                                <a href="image-post.html">
+                                <a href="<?= url("show/post/" . $selectedPosts[2]['id']) ?>">
                                     <h3><?= $selectedPosts[2]['title'] ?></h3>
                                 </a>
                                 <ul class="meta">
@@ -103,11 +103,11 @@
                                         <img class="img-fluid" src="<?= $lastsixPost['image'] ?>" alt="">
                                     </div>
                                     <ul class="tags">
-                                        <li><a href="#"><?= $lastsixPost['category_name'] ?></a></li>
+                                        <li><a href="<?= url("show/category/" . $lastsixPost['category_id']) ?>"><?= $lastsixPost['category_name'] ?></a></li>
                                     </ul>
                                 </div>
                                 <div class="col-lg-7 post-right">
-                                    <a href="image-post.html">
+                                    <a href="<?= url("show/post/" . $lastsixPost['id']) ?>">
                                         <h4><?= $lastsixPost['title'] ?></h4>
                                     </a>
                                     <ul class="meta">
@@ -140,9 +140,9 @@
                                 </div>
                                 <div class="details">
                                     <ul class="tags">
-                                        <li><a href="#"><?= $mostViewedPosts[0]['category_name']?></a></li>
+                                        <li><a href="<?= url("show/category/" . $mostViewedPosts[0]['category_id']) ?>"><?= $mostViewedPosts[0]['category_name']?></a></li>
                                     </ul>
-                                    <a href="image-post.html">
+                                    <a href="<?= url("show/post/" . $mostViewedPosts[0]['id']) ?>">
                                         <h3><?= $mostViewedPosts[0]['title']?></h3>
                                     </a>
                                     <ul class="meta">
@@ -164,11 +164,11 @@
                                             <img class="img-fluid" src="<?= asset($mostViewedPosts[1]['image']) ?>" alt="">
                                         </div>
                                         <ul class="tags">
-                                            <li><a href="#"><?= $mostViewedPosts[1]['category_name']?> </a></li>
+                                            <li><a href="<?= url("show/category/" . $mostViewedPosts[1]['category_id']) ?>"><?= $mostViewedPosts[1]['category_name']?> </a></li>
                                         </ul>
                                     </div>
                                     <div class="details">
-                                    <a href="image-post.html">
+                                    <a href="<?= url("show/post/" . $mostViewedPosts[1]['id']) ?>">
                                         <h3><?= $mostViewedPosts[1]['title']?></h3>
                                     </a>
                                     <ul class="meta">
@@ -191,11 +191,11 @@
                                             <img class="img-fluid" src="<?= asset($mostViewedPosts[2]['image']) ?>" alt="">
                                         </div>
                                         <ul class="tags">
-                                            <li><a href="#"> <?= $mostViewedPosts[2]['category_name']?></a></li>
+                                            <li><a href="<?= url("show/category/" . $mostViewedPosts[2]['category_id']) ?>"> <?= $mostViewedPosts[2]['category_name']?></a></li>
                                         </ul>
                                     </div>
                                     <div class="details">
-                                    <a href="image-post.html">
+                                    <a href="<?= url("show/post/" . $mostViewedPosts[2]['id']) ?>">
                                         <h3><?= $mostViewedPosts[2]['title']?></h3>
                                     </a>
                                     <ul class="meta">
