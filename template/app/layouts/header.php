@@ -18,6 +18,8 @@
     <?php $title = null;
         if(isset($setting)){
             $title = $setting['title'];
+        }elseif(isset($category)){
+            $title = $category['name'];
         }else{
             $title = $post['title'];
         }
