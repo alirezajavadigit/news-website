@@ -70,8 +70,20 @@ class Home
     public function categoryShow($id)
     {
         $db = new DataBase();
-        $category = $db->select("SELECT* FROM categories WHERE id = ?", [$id])->fetch();
-        return view("template.app.category.php", compact("category"));
+        $selectedPosts = $db->select("SELECT posts.*, (SELECT name FROM categories WHERE posts.cat_id = categories.id) as category_name,(SELECT id FROM categories WHERE posts.cat_id = categories.id) as category_id, (SELECT username FROM users WHERE posts.user_id = users.id) as user_name, (SELECT COUNT(*) FROM comments WHERE posts.id = comments.post_id) as comment_count FROM posts WHERE posts.selected = 1 ORDER BY posts.created_at DESC LIMIT 0,3")->fetchAll();
+        $menus = $db->select("SELECT * FROM menus WHERE parent_id IS NULL")->fetchAll();
+        $category = $db->select("SELECT * FROM categories WHERE id = ?", [$id])->fetch();
+        $mostCommentedPosts = $db->select("SELECT posts.*, (SELECT name FROM categories WHERE posts.cat_id = categories.id) as category_name, (SELECT id FROM categories WHERE posts.cat_id = categories.id) as category_id, (SELECT username FROM users WHERE posts.user_id = users.id) as user_name, (SELECT COUNT(*) FROM comments WHERE posts.id = comments.post_id) as comment_count FROM posts ORDER BY comment_count DESC LIMIT 0,6")->fetchAll();
+        $posts = $db->select("SELECT * FROM posts WHERE cat_id = ?", [$id])->fetchAll();
+        $lastsixPosts = $db->select("SELECT posts.*, (SELECT name FROM categories WHERE posts.cat_id = categories.id) as category_name, (SELECT id FROM categories WHERE posts.cat_id = categories.id) as category_id, (SELECT username FROM users WHERE posts.user_id = users.id) as user_name, (SELECT COUNT(*) FROM comments WHERE posts.id = comments.post_id) as comment_count FROM posts WHERE posts.cat_id = ? ORDER BY posts.created_at DESC LIMIT 0,6", [$id])->fetchAll();
+        foreach($selectedPosts as $key => $selectedPost){
+            if($selectedPost['id'] == $id){
+                unset($selectedPosts[$key]);
+            }
+        }
+        $mostViewedPosts = $db->select("SELECT posts.*, (SELECT name FROM categories WHERE posts.cat_id = categories.id) as category_name, (SELECT id FROM categories WHERE posts.cat_id = categories.id) as category_id, (SELECT username FROM users WHERE posts.user_id = users.id) as user_name, (SELECT COUNT(*) FROM comments WHERE posts.id = comments.post_id) as comment_count FROM posts WHERE posts.cat_id = ? ORDER BY posts.view DESC LIMIT 0,3", [$id])->fetchAll();
+        $comments = $db->select("SELECT comments.*, (SELECT username FROM users WHERE comments.user_id = users.id) as user_name FROM comments WHERE post_id = ?", [$id])->fetchAll();
+        return view("template.app.category.php", compact("category", "mostViewedPosts", "lastsixPosts", "posts","comments", "selectedPosts", "menus", "mostCommentedPosts"));
     }
     public function commentStore($request)
     {
