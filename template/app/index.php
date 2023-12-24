@@ -100,7 +100,7 @@
                                 <div class="col-lg-5 post-left">
                                     <div class="feature-img relative">
                                         <div class="overlay overlay-bg"></div>
-                                        <img class="img-fluid" src="<?= $lastsixPost['image'] ?>" alt="">
+                                        <img class="img-fluid" src="<?= asset($lastsixPost['image']) ?>" alt="">
                                     </div>
                                     <ul class="tags">
                                         <li><a href="<?= url("show/category/" . $lastsixPost['category_id']) ?>"><?= $lastsixPost['category_name'] ?></a></li>
